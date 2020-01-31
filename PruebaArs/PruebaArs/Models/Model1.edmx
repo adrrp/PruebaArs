@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Afiliados_Adrian_PadillaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Afiliados">
+          <Key>
+            <PropertyRef Name="Id_Afiliados" />
+          </Key>
+          <Property Name="Id_Afiliados" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres_Afiliados" Type="varchar" MaxLength="50" />
+          <Property Name="Apellidos_Afiliados" Type="varchar" MaxLength="50" />
+          <Property Name="Fecha_Registro" Type="date" />
+          <Property Name="MConsumido" Type="float" />
+          <Property Name="Id_Estatus" Type="varchar" MaxLength="20" />
+          <Property Name="Id_Plan" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="Estatus" />
+          </Key>
+          <Property Name="Id_Estatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estatus" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Planes">
+          <Key>
+            <PropertyRef Name="Planes" />
+          </Key>
+          <Property Name="Id_Planes" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Planes" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MCobertura" Type="int" />
+          <Property Name="Fecha_Registro" Type="date" />
+          <Property Name="Estatus" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_Estatus">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="0..1" />
+          <End Role="Afiliados" Type="Self.Afiliados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="Estatus" />
+            </Principal>
+            <Dependent Role="Afiliados">
+              <PropertyRef Name="Id_Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Planes">
+          <End Role="Planes" Type="Self.Planes" Multiplicity="0..1" />
+          <End Role="Afiliados" Type="Self.Afiliados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planes">
+              <PropertyRef Name="Planes" />
+            </Principal>
+            <Dependent Role="Afiliados">
+              <PropertyRef Name="Id_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Afiliados_Adrian_PadillaModelStoreContainer">
+          <EntitySet Name="Afiliados" EntityType="Self.Afiliados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Planes" EntityType="Self.Planes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Estatus" Association="Self.FK_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Afiliados" EntitySet="Afiliados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Planes" Association="Self.FK_Planes">
+            <End Role="Planes" EntitySet="Planes" />
+            <End Role="Afiliados" EntitySet="Afiliados" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Afiliados_Adrian_PadillaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Afiliado">
+          <Key>
+            <PropertyRef Name="Id_Afiliados" />
+          </Key>
+          <Property Name="Id_Afiliados" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres_Afiliados" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellidos_Afiliados" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Registro" Type="DateTime" Precision="0" />
+          <Property Name="MConsumido" Type="Double" />
+          <Property Name="Id_Estatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Id_Plan" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Estatu" Relationship="Self.FK_Estatus" FromRole="Afiliados" ToRole="Estatus" />
+          <NavigationProperty Name="Plane" Relationship="Self.FK_Planes" FromRole="Afiliados" ToRole="Planes" />
+        </EntityType>
+        <EntityType Name="Estatu">
+          <Key>
+            <PropertyRef Name="Estatus" />
+          </Key>
+          <Property Name="Id_Estatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Afiliados" Relationship="Self.FK_Estatus" FromRole="Estatus" ToRole="Afiliados" />
+        </EntityType>
+        <EntityType Name="Plane">
+          <Key>
+            <PropertyRef Name="Planes" />
+          </Key>
+          <Property Name="Id_Planes" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Planes" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MCobertura" Type="Int32" />
+          <Property Name="Fecha_Registro" Type="DateTime" Precision="0" />
+          <Property Name="Estatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Afiliados" Relationship="Self.FK_Planes" FromRole="Planes" ToRole="Afiliados" />
+        </EntityType>
+        <Association Name="FK_Estatus">
+          <End Role="Estatus" Type="Self.Estatu" Multiplicity="0..1" />
+          <End Role="Afiliados" Type="Self.Afiliado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="Estatus" />
+            </Principal>
+            <Dependent Role="Afiliados">
+              <PropertyRef Name="Id_Estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Planes">
+          <End Role="Planes" Type="Self.Plane" Multiplicity="0..1" />
+          <End Role="Afiliados" Type="Self.Afiliado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planes">
+              <PropertyRef Name="Planes" />
+            </Principal>
+            <Dependent Role="Afiliados">
+              <PropertyRef Name="Id_Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Afiliados_Adrian_PadillaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Afiliados" EntityType="Self.Afiliado" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatu" />
+          <EntitySet Name="Planes" EntityType="Self.Plane" />
+          <AssociationSet Name="FK_Estatus" Association="Self.FK_Estatus">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Afiliados" EntitySet="Afiliados" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Planes" Association="Self.FK_Planes">
+            <End Role="Planes" EntitySet="Planes" />
+            <End Role="Afiliados" EntitySet="Afiliados" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Afiliados_Adrian_PadillaModelStoreContainer" CdmEntityContainer="Afiliados_Adrian_PadillaEntities">
+          <EntitySetMapping Name="Afiliados">
+            <EntityTypeMapping TypeName="Afiliados_Adrian_PadillaModel.Afiliado">
+              <MappingFragment StoreEntitySet="Afiliados">
+                <ScalarProperty Name="Id_Afiliados" ColumnName="Id_Afiliados" />
+                <ScalarProperty Name="Nombres_Afiliados" ColumnName="Nombres_Afiliados" />
+                <ScalarProperty Name="Apellidos_Afiliados" ColumnName="Apellidos_Afiliados" />
+                <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+                <ScalarProperty Name="MConsumido" ColumnName="MConsumido" />
+                <ScalarProperty Name="Id_Estatus" ColumnName="Id_Estatus" />
+                <ScalarProperty Name="Id_Plan" ColumnName="Id_Plan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estatus">
+            <EntityTypeMapping TypeName="Afiliados_Adrian_PadillaModel.Estatu">
+              <MappingFragment StoreEntitySet="Estatus">
+                <ScalarProperty Name="Id_Estatus" ColumnName="Id_Estatus" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Planes">
+            <EntityTypeMapping TypeName="Afiliados_Adrian_PadillaModel.Plane">
+              <MappingFragment StoreEntitySet="Planes">
+                <ScalarProperty Name="Id_Planes" ColumnName="Id_Planes" />
+                <ScalarProperty Name="Planes" ColumnName="Planes" />
+                <ScalarProperty Name="MCobertura" ColumnName="MCobertura" />
+                <ScalarProperty Name="Fecha_Registro" ColumnName="Fecha_Registro" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
